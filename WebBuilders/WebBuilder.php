@@ -35,14 +35,13 @@ class WebBuilder{
         return $this->navBar->CreateNavBar();
     }
 
-
     function CreateViewFilm($movieInfo)
     {
         $html = "<div class= movie> <a href= \"View.php?is=film&id=" . $movieInfo["Film_id"] ."\">";
             $html .= "<img src = \"" . IMG_BASEPATH . $movieInfo["IMG_Poster"] . "\">";
             $html .= "<div class = movie-info>";
                 $html .= "<h3>". $movieInfo["Title"] . "</h3>";
-                $html .= "<span>" . $movieInfo["Score"] . "</span>";
+                $html .= "<p>" . $movieInfo["Score"] . "</p>";
             $html .= "</div>";
         $html .= "</a></div>";
         
@@ -50,14 +49,13 @@ class WebBuilder{
         return $html;
     }
 
-
     function CreateViewTvShow($showInfo)
     {
         $html = "<div class= movie> <a href= \"View.php?is=tvshow&id=" . $showInfo["Show_id"] ."\"/>";
             $html .= "<img src = \"" . IMG_BASEPATH . $showInfo["IMG_Poster"] . "\">";
             $html .= "<div class = movie-info>";
                 $html .= "<h3>". $showInfo["Title"] . "</h3>";
-                $html .= "<span>" . $showInfo["Score"] . "</span>";
+                $html .= "<p>" . $showInfo["Score"] . "</p>";
             $html .= "</div>";
         $html .= "</div>";
         

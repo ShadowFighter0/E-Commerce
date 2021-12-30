@@ -7,8 +7,9 @@
 .folder{
     display: flex;
     flex-wrap: wrap;
+
+    margin: auto;
     
-     
 }
 
 .folder a{
@@ -39,11 +40,13 @@
 .folder .movie-info h3{
     margin: 0;
     margin-right: 5px;
+    line-height: 30px;
 }
 
-.folder .movie-info span{
+.folder .movie-info p{
     background-color: rgb(141, 66, 66);
     border-radius: 3px;
-    padding: 0.25rem 0.5rem;
+    padding: 0.1rem 0.5rem;
+    text-align: center;
 
 }

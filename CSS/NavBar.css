@@ -25,6 +25,7 @@ ul{
 }
 
 #topnav a {
+    width: auto;
     float: left;
     display: block;
     color: black;
@@ -45,7 +46,8 @@ ul{
 }
   
 #topnav #search-container {
-    margin-left: 25%;
+    margin-left: 3rem;
+    width: auto;
     float: left;
 }
   
