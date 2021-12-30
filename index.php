@@ -43,7 +43,7 @@
 
         //Get the 5 first MOVIES
         $sqlConnection = $webBuilder->sql->OpenSqli();
-        $query = "SELECT * FROM film WHERE Film_id < " . NUM_BOXES ."";
+        $query = "SELECT * FROM film WHERE Product_Id < " . NUM_BOXES ."";
         $result = $sqlConnection->query($query);
 
         $webBuilder->sql->CloseConnection();
@@ -53,7 +53,7 @@
             $result->data_seek($i);
             $row = $result->fetch_array(MYSQLI_ASSOC);
 
-            $html .= $webBuilder->CreateViewFilm($row, "Film");
+            $html .= $webBuilder->CreateViewFilm($row, "film");
         }
         $html .= "</div>";
 
@@ -67,7 +67,7 @@
         $html .= "<div class = line></div>";
 
         $sqlConnection = $webBuilder->sql->OpenSqli();
-        $query = "SELECT * FROM tvshow WHERE Show_id < " . NUM_BOXES ."";
+        $query = "SELECT * FROM tvshow WHERE Product_Id < " . NUM_BOXES ."";
 
         $result = $sqlConnection->query($query);
         $webBuilder->sql->CloseConnection();
@@ -78,7 +78,7 @@
         {
             $result->data_seek($i);
             $row = $result->fetch_array(MYSQLI_ASSOC);
-            $html .= $webBuilder->CreateViewTvShow($row, "TvShow");
+            $html .= $webBuilder->CreateViewFilm($row,"tvshow");
         }
 
         $html .= "</div>";

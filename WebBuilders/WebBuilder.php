@@ -5,7 +5,8 @@
 
     define ("NAVBAR_STYLE_PATH", "CSS/NavBar.css");    
     define ("INDEX_STYLE_PATH", "CSS/Index.css");   
-    define ("MOVIE_STYLE_PATH", "CSS/Movie.css");   
+    define ("MOVIE_STYLE_PATH", "CSS/Movie.css");
+    define ("VIEW_STYLE_PATH", "CSS/View.css");      
 
     define("IMG_BASEPATH", "https://image.tmdb.org/t/p/w500/");
 
@@ -26,6 +27,7 @@ class WebBuilder{
         $html .= "<link rel=\"stylesheet\" href=" . NAVBAR_STYLE_PATH . ">";
         $html .= "<link rel=\"stylesheet\" href=" . INDEX_STYLE_PATH . ">";
         $html .= "<link rel=\"stylesheet\" href=" . MOVIE_STYLE_PATH . ">";
+        $html .= "<link rel=\"stylesheet\" href=" . VIEW_STYLE_PATH . ">";
 
         return $html;
     }
@@ -35,9 +37,9 @@ class WebBuilder{
         return $this->navBar->CreateNavBar();
     }
 
-    function CreateViewFilm($movieInfo)
+    function CreateViewFilm($movieInfo, $is)
     {
-        $html = "<div class= movie> <a href= \"View.php?is=film&id=" . $movieInfo["Film_id"] ."\">";
+        $html = "<div class= movie> <a href= \"View.php?is=$is&id=" . $movieInfo["Product_Id"] ."\">";
             $html .= "<img src = \"" . IMG_BASEPATH . $movieInfo["IMG_Poster"] . "\">";
             $html .= "<div class = movie-info>";
                 $html .= "<h3>". $movieInfo["Title"] . "</h3>";
@@ -49,18 +51,9 @@ class WebBuilder{
         return $html;
     }
 
-    function CreateViewTvShow($showInfo)
+    function GetImgBasePath()
     {
-        $html = "<div class= movie> <a href= \"View.php?is=tvshow&id=" . $showInfo["Show_id"] ."\"/>";
-            $html .= "<img src = \"" . IMG_BASEPATH . $showInfo["IMG_Poster"] . "\">";
-            $html .= "<div class = movie-info>";
-                $html .= "<h3>". $showInfo["Title"] . "</h3>";
-                $html .= "<p>" . $showInfo["Score"] . "</p>";
-            $html .= "</div>";
-        $html .= "</div>";
-        
-
-        return $html;
+        return IMG_BASEPATH;
     }
 }
 

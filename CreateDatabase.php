@@ -1,6 +1,6 @@
 <?php
 
-    require_once "PHP" . DIRECTORY_SEPARATOR . "mysqli.php";
+    require_once "WebBuilders" . DIRECTORY_SEPARATOR . "mysqli.php";
 
     //Define URL for databases
     define("MOVIES_DB_URL", "https://api.themoviedb.org/3/movie/popular?api_key=e4969e3fb066dfee11facfc052865079");
@@ -21,7 +21,6 @@
         $sql = $mysqli->OpenSqli();
 
         //Delete all existing products
-        $sql->query("DELETE FROM products");
         $sql->query("DELETE FROM film");
         $sql->query("DELETE FROM filmgenre");
         $sql->query("DELETE FROM tvshow");
@@ -58,29 +57,23 @@
     }
 
     function InsertFilmToTable($filmInfo, $sql)
-    {
-        //Get the number of rows in products
-        $productId = mysqli_num_rows($sql->query("SELECT * FROM products"));
-        
+    {        
         //Get the number of rows in film
         $filmId = mysqli_num_rows($sql->query("SELECT * FROM film"));
 
         //We want to include the selected film in:
 
-        //Product
-        $amount = rand(1,100);
-        $price = rand(7, 30);
-        $query = "INSERT INTO products (Product_id, Type, Type_id, Price, Stock) VALUES ($productId, 'Film', $filmId, $price, $amount)";
-        $sql->query($query);
-
         //Film
         $filmTitle = mysqli_real_escape_string($sql,$filmInfo["title"]);
         $filmOverview = mysqli_real_escape_string($sql,$filmInfo["overview"]);
 
-        $query = "INSERT INTO film (Film_id, Title, overview, Release_Date, Budget, Revenue, Duration, Score, Vote_Count, IMG_Background, IMG_Poster)
+        $amount = rand(1,100);
+        $price = rand(7, 30);
+
+        $query = "INSERT INTO film (Product_Id, Title, overview, Release_Date, Budget, Revenue, Duration, Score, Vote_Count, Price , Amount, IMG_Background, IMG_Poster)
                 Values ($filmId , '". $filmTitle . "' , '". $filmOverview . "' , '" . $filmInfo["release_date"] . "' , '" . 
                 $filmInfo["budget"] . "' , '" . $filmInfo["revenue"] . "' , '" . $filmInfo["runtime"] . "' , '" . $filmInfo["vote_average"] . "' , '" .
-                $filmInfo["vote_count"] . "' , '" . $filmInfo["backdrop_path"] . "' , '" . $filmInfo["poster_path"] . "');";
+                $filmInfo["vote_count"] . "' , '$price' , '$amount' , '" . $filmInfo["backdrop_path"] . "' , '" . $filmInfo["poster_path"] . "');";
 
         $sql->query($query);
 
@@ -90,7 +83,7 @@
         foreach($genres as $key => $value)
         {
             $query = "INSERT INTO filmgenre (Product_Id, genre)
-            VALUES ($productId, '" . $value["name"] . "');";
+            VALUES ($filmId, '" . $value["name"] . "');";
             
             $sql->query($query);
         }
@@ -120,29 +113,23 @@
     }
 
     function InsertTvShowToTable($tvShowInfo, $sql)
-    {
-        //Get the number of rows in products
-        $productId = mysqli_num_rows($sql->query("SELECT * FROM products"));
-        
+    {        
         //Get the number of rows in film
         $tvShowId = mysqli_num_rows($sql->query("SELECT * FROM tvshow"));
 
         //We want to include the selected show in:
 
-        //Product
-        $amount = rand(1,100);
-        $price = rand(7, 30);
-        $query = "INSERT INTO products (Product_id, Type, Type_id, Price, Stock) VALUES ($productId, 'TvShow', $tvShowId, $price, $amount)";
-        $sql->query($query);
-
         //show
         $tvShowTitle = mysqli_real_escape_string($sql,$tvShowInfo["name"]);
         $tvShowOverview = mysqli_real_escape_string($sql,$tvShowInfo["overview"]);
 
-        $query = "INSERT INTO tvshow(Show_Id, Title, overview, first_air_date, last_air_date, number_of_episodes, number_of_seasons, score, Vote_Count, IMG_Background, IMG_Poster)
+        $amount = rand(1,100);
+        $price = rand(7, 30);
+
+        $query = "INSERT INTO tvshow(Product_Id, Title, overview, first_air_date, last_air_date, number_of_episodes, number_of_seasons, score, Vote_Count, Price, Amount, IMG_Background, IMG_Poster)
                 Values ($tvShowId , '". $tvShowTitle . "' , '". $tvShowOverview . "' , '" . $tvShowInfo["first_air_date"] . "' , '" . 
                 $tvShowInfo["last_air_date"] . "' , '" . $tvShowInfo["number_of_episodes"] . "' , '" . $tvShowInfo["number_of_seasons"] . "' , '" . $tvShowInfo["vote_average"] . "' , '" .
-                $tvShowInfo["vote_count"] . "' , '" . $tvShowInfo["backdrop_path"] . "' , '" . $tvShowInfo["poster_path"] . "');";
+                $tvShowInfo["vote_count"] . "' , $price, $amount,  '" . $tvShowInfo["backdrop_path"] . "' , '" . $tvShowInfo["poster_path"] . "');";
 
         $sql->query($query);
 
@@ -152,7 +139,7 @@
         foreach($genres as $key => $value)
         {
             $query = "INSERT INTO tvshowgenre (Product_Id, genre)
-            VALUES ($productId, '" . $value["name"] . "');";
+            VALUES ($tvShowId, '" . $value["name"] . "');";
             
             $sql->query($query);
         }
