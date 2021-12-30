@@ -5,7 +5,6 @@
     //Define URL for databases
     define("MOVIES_DB_URL", "https://api.themoviedb.org/3/movie/popular?api_key=e4969e3fb066dfee11facfc052865079");
     define("SHOWS_DB_URL", "https://api.themoviedb.org/3/tv/popular?api_key=e4969e3fb066dfee11facfc052865079");
-    define("IMG_BASEPATH", "https://image.tmdb.org/t/p/w500/");
     define("MOVIES_GENRE_DB_URL","https://api.themoviedb.org/3/genre/movie/list?api_key=e4969e3fb066dfee11facfc052865079");
     define("SHOWS_GENRE_DB_URL","https://api.themoviedb.org/3/genre/tv/list?api_key=e4969e3fb066dfee11facfc052865079");
 

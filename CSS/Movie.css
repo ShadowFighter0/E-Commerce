@@ -1,0 +1,49 @@
+
+*{
+    box-sizing: border-box;
+}
+
+
+.folder{
+    display: flex;
+    flex-wrap: wrap;
+    
+     
+}
+
+.folder a{
+    text-decoration: none; 
+}
+
+.folder .movie{
+    background-color: rgb(49, 49, 49);
+    border-radius: 3px;
+    box-shadow: 0 4px 5px rgba(0,0,0,0.2);
+    width: 300px;
+
+    margin: 2rem;
+}
+
+.folder .movie img{
+    width: 100%;
+}
+
+.folder .movie-info{
+    color:white;
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 1rem 1rem;
+    letter-spacing: 1px;
+}
+
+.folder .movie-info h3{
+    margin: 0;
+    margin-right: 5px;
+}
+
+.folder .movie-info span{
+    background-color: rgb(141, 66, 66);
+    border-radius: 3px;
+    padding: 0.25rem 0.5rem;
+
+}
