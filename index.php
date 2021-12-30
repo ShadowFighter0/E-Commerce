@@ -1,7 +1,8 @@
 <?php
     
     require_once "WebBuilders/WebBuilder.php";
-    
+    define ("NUM_BOXES", 6);
+
     echo IndexPage();
 
     function IndexPage()
@@ -42,11 +43,10 @@
 
         //Get the 5 first MOVIES
         $sqlConnection = $webBuilder->sql->OpenSqli();
-        $query = "SELECT * FROM film WHERE Film_id < 5";
+        $query = "SELECT * FROM film WHERE Film_id < " . NUM_BOXES ."";
         $result = $sqlConnection->query($query);
 
         $webBuilder->sql->CloseConnection();
-
         $html .= "<div class = folder>";
         for($i = 0; $i < $result->num_rows; $i++)
         {
@@ -57,6 +57,9 @@
         }
         $html .= "</div>";
 
+        //Separate
+        
+        $html .= "<div class = separator></div>";
 
 
         //TVSHOWS
@@ -64,7 +67,8 @@
         $html .= "<div class = line></div>";
 
         $sqlConnection = $webBuilder->sql->OpenSqli();
-        $query = "SELECT * FROM tvshow WHERE Show_id < 5";
+        $query = "SELECT * FROM tvshow WHERE Show_id < " . NUM_BOXES ."";
+
         $result = $sqlConnection->query($query);
         $webBuilder->sql->CloseConnection();
 

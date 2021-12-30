@@ -1,14 +1,14 @@
-
 *{
     box-sizing: border-box;
 }
 
+.separator{
+    clear: both;
+}
 
-.folder{
-    display: flex;
-    flex-wrap: wrap;
-
-    margin: auto;
+.folder{   
+    width: 100%;
+    height: auto;
     
 }
 
@@ -17,12 +17,13 @@
 }
 
 .folder .movie{
+    float: left;
+    display: flex;
     background-color: rgb(49, 49, 49);
     border-radius: 3px;
     box-shadow: 0 4px 5px rgba(0,0,0,0.2);
-    width: 300px;
-
-    margin: 2rem;
+    width: 325px;
+    margin: 25px;
 }
 
 .folder .movie img{
@@ -40,13 +41,11 @@
 .folder .movie-info h3{
     margin: 0;
     margin-right: 5px;
-    line-height: 30px;
 }
 
 .folder .movie-info p{
     background-color: rgb(141, 66, 66);
     border-radius: 3px;
-    padding: 0.1rem 0.5rem;
-    text-align: center;
+    padding: 0.25rem 0.5rem;
 
 }
