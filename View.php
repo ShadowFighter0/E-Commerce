@@ -72,15 +72,43 @@
             $html .= "</div>";
 
             $html .= "<div id=Right>";
-                $html .= "<h2>" . $data["Title"] . "</h2>";
+                $html .= "<div id=Title>";
+                    $html .= "<h2>" . $data["Title"] . "</h2>";
+                    $html .= "<h2 id=ScoreNumber>" . $data["Score"] . "</h2>";
+                    $html .= "<h3 id=ScoreText> Score (".$data["Vote_Count"] .") </h3>";
+                $html .= "</div>";
 
-                $html .= "<div class = HorizontalLine></div>";
-                $html .= "<p class = BottomText>" . $data["Release_Date"] . "</p>";
-                $html .= "<p class = BottomText>" . $data["Duration"] . "</p>";
+            $html .= "<div class = HorizontalLine></div>";
+
+            $html .= "<div id=SubText>";
+                $html .= "<span > Release Date " . $data["Release_Date"] . "</span>";
+                $html .= "<span >Duration " . $data["Duration"] . "</span>";
+                
+                $html .= "<br><br>";
+
+                $html .= "<span> Genres:</span>";
+
+                foreach($genres as $key => $value)
+                {
+                    $html .= "<span >" . $value . "</span>";
+                }
+                
+            $html .= "</div>";
+
+            $html .= "<div class = HorizontalLine></div>";
+
+            $html .= "<div id = Overview>";
+                $html .= "<h2>Overview:</h2>";
+                $html .= "<p>" . $data["overview"] ."</p>";
+            $html .= "</div>";
+
+            $html .= "<div class = HorizontalLine></div>";
+
+            $html .= "";
 
 
 
-                $html .= "<button> Add To Shoping List</button>";
+            $html .= "<button> Add To Shoping List</button>";
             $html .= "</div>";
 
         $html .= "</div>";

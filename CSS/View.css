@@ -2,13 +2,14 @@
 #Viewer{
     overflow: hidden;
 
-    width: 90%;
+    width: 96%;
     margin: 2% 5%;
 }
 
 #Viewer .HorizontalLine{
-    width: 100%;
-    margin: 1rem 0rem;
+    clear: both;
+    width: 95%;
+    margin: 2% 2.5%;
     border-bottom: 1px solid black;
 }
 
@@ -20,17 +21,47 @@
 
 #Right
 {
-    width: 45%;
-    margin: 5%;
+    display: block;
+
+    width: 55%;
+    margin: 2%;
+    padding: 2%;
     float: left;
+    border: 1px solid black;
+}
+
+#Title
+{
+    width: 100%;
+    height: 10%;
+    margin-bottom: 10%;
 }
 
 #Right h2{
+    width: 80%;
     font-size: 2.5em;
+    float: left;
+}
+
+#Right #Title #ScoreNumber{
+    width: 15%;
+    float: left;
+    height: 50%;
+    margin-bottom: 0;
+    padding-left: 5%;
+}
+
+#Right #Title #ScoreText{
+    margin: 0;
+    width: 15%;
+    height: 5%;
+    float: left;
+    text-align: center;
 }
 
 #Right p{
-
+    float: left;
+    margin-left: 20%;
 }
 
 #Viewer img{
@@ -43,4 +74,32 @@
     margin: 5% 0%;
     width: 40em;
     height: 3em;
+}
+
+#Viewer #SubText
+{
+    margin: auto;
+}
+
+#Viewer #SubText span{
+    width: 100%;
+    height: 15%;
+    margin: 1% 5%;
+}
+
+#Viewer #Overview
+{
+    margin: 0% 3%;
+}
+
+#Viewer #Overview h2
+{
+    margin: 2% 0% ;
+    font-size: 2em;
+}
+
+#Viewer #Overview p
+{
+    margin : 1% auto 3% auto;
+    text-align: justify;
 }
