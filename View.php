@@ -81,8 +81,8 @@
             $html .= "<div class = HorizontalLine></div>";
 
             $html .= "<div id=SubText>";
-                $html .= "<span > Release Date " . $data["Release_Date"] . "</span>";
-                $html .= "<span >Duration " . $data["Duration"] . "</span>";
+                $html .= "<span > Release Date: " . $data["Release_Date"] . "</span>";
+                $html .= "<span >Duration: " . $data["Duration"] . " mins </span>";
                 
                 $html .= "<br><br>";
 
@@ -90,7 +90,7 @@
 
                 foreach($genres as $key => $value)
                 {
-                    $html .= "<span >" . $value . "</span>";
+                    $html .= "<span>" . $value . "</span>";
                 }
                 
             $html .= "</div>";
@@ -104,11 +104,17 @@
 
             $html .= "<div class = HorizontalLine></div>";
 
-            $html .= "";
+            $html .= "<div id = BottonInfo>";
+                $html .= "<span> Budget:" . $data["Budget"] . "$</span>";
+                $html .= "<span> Revenue:" .  $data["Revenue"] . "$</span>";
+            $html .= "</div>"; 
 
+            $html .= "<div class = HorizontalLine></div>";
 
-
+            $html .= "<div id=ShopButton>";
             $html .= "<button> Add To Shoping List</button>";
+            $html .= "<span id=PriceUp> Price: <br></span>";
+            $html .= "<span id=PriceDown>" . $data["Price"] . "$</span>";
             $html .= "</div>";
 
         $html .= "</div>";
