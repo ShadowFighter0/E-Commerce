@@ -16,7 +16,7 @@
         $html .= "<head>";
 
         //Write Head
-        $html .= $webBuilder->WriteHeaderLinks();
+        $html .= $webBuilder->WriteHeaderLinksForIndex();
         
         $html .= "</head>";
 
@@ -53,7 +53,7 @@
             $result->data_seek($i);
             $row = $result->fetch_array(MYSQLI_ASSOC);
 
-            $html .= $webBuilder->CreateViewFilm($row, "film");
+            $html .= $webBuilder->CreateViewFilm($row);
         }
         $html .= "</div>";
 
@@ -78,7 +78,7 @@
         {
             $result->data_seek($i);
             $row = $result->fetch_array(MYSQLI_ASSOC);
-            $html .= $webBuilder->CreateViewFilm($row,"tvshow");
+            $html .= $webBuilder->CreateViewTvShow($row);
         }
 
         $html .= "</div>";

@@ -15,7 +15,7 @@
         $html .= "<head>";
 
         //Write Head
-        $html .= $webBuilder->WriteHeaderLinks();
+        $html .= $webBuilder->WriteHeaderLinksForViewTvShow();
         
         $html .= "</head>";
 
@@ -39,23 +39,16 @@
         $html .= $webBuilder->CreateNavBar();
 
         //Get the selected thing
-        if(isset($_GET["is"]) && isset($_GET["id"]))
+        if(isset($_GET["id"]))
         {
             $sqliConnection = $webBuilder->sql->OpenSqli();
 
-            $data = GetFilmData($sqliConnection);
+            $data = GetShowData($sqliConnection);
             $genres = GetGenreData($sqliConnection);
 
-            $webBuilder->sql->CloseConnection(); 
-            
-            if($_GET["is"] == "film")
-            {
-               $html .= CreateFilmView($data, $genres, $webBuilder);
-            }
-            else
-            {
-               //$html .= CreateTvShowView();
-            }
+            $webBuilder->sql->CloseConnection();
+
+            $html .= CreateFilmView($data, $genres, $webBuilder);
         }
         else
         {
@@ -148,9 +141,9 @@
         return $filmGenres;
     }
 
-    function GetFilmData($sqliConnection)
+    function GetShowData($sqliConnection)
     {
-        $queryData = "SELECT * FROM " . $_GET["is"] . " WHERE Product_Id = " . $_GET["id"]."";
+        $queryData = "SELECT * FROM film WHERE Product_Id = " . $_GET["id"]."";
 
         $filmData = $sqliConnection->query($queryData);
 
