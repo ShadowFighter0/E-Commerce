@@ -106,7 +106,7 @@
             $html .= "<div class = HorizontalLine></div>";
 
             $html .= "<div id = BottonInfo>";
-                $html .= "<span> Number of Episodes: " . $data["number_of_episodes"] . " <br></span>";
+                $html .= "<span> Number of Episodes: " . $data["number_of_episodes"] . " <br><br></span>";
                 $html .= "<span> Number of Seasons:  " .  $data["number_of_seasons"] . " </span>";
             $html .= "</div>"; 
 

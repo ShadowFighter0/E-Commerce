@@ -120,11 +120,8 @@ body{
 
 #Viewer #BottonInfo{
     width: 100%;
-    margin: 3%;
-}
-
-#Viewer #BottonInfo span{
-    margin: 13%;
+    margin: auto;
+    text-align: center;
 }
 
 #Viewer #ShopButton
