@@ -9,7 +9,6 @@
 .folder{   
     width: 100%;
     height: auto;
-    
 }
 
 .folder a{
@@ -18,12 +17,11 @@
 
 .folder .movie{
     float: left;
-    display: flex;
     background-color: rgb(49, 49, 49);
     border-radius: 3px;
     box-shadow: 0 4px 5px rgba(0,0,0,0.2);
-    width: 325px;
-    margin: 25px;
+    width: 320px;
+    margin: 20px;
 }
 
 .folder .movie img{

@@ -28,7 +28,6 @@
         $html .= "</html>";
 
         return $html;
-
     }
 
     function CreateBody($webBuilder)
@@ -68,14 +67,14 @@
                 $html .= "<div id=Title>";
                     $html .= "<h2>" . $data["Title"] . "</h2>";
                     $html .= "<h2 id=ScoreNumber>" . $data["Score"] . "</h2>";
-                    $html .= "<h3 id=ScoreText> Score (".$data["Vote_Count"] .") </h3>";
+                    $html .= "<h3 id=ScoreText> Score (".$data["vote_count"] .") </h3>";
                 $html .= "</div>";
 
             $html .= "<div class = HorizontalLine></div>";
 
             $html .= "<div id=SubText>";
-                $html .= "<span > Release Date: " . $data["Release_Date"] . "</span>";
-                $html .= "<span >Duration: " . $data["Duration"] . " mins </span>";
+                $html .= "<span>First Air: " . $data["first_air_date"] . "</span>";
+                $html .= "<span>Last Air: "  . $data["last_air_date"]  . "</span>";
                 
                 $html .= "<br><br>";
 
@@ -92,14 +91,23 @@
 
             $html .= "<div id = Overview>";
                 $html .= "<h2>Overview:</h2>";
-                $html .= "<p>" . $data["overview"] ."</p>";
+                
+                if (strlen($data["overview"]) > 0)
+                {
+                    $html .= "<p>" . $data["overview"] ."</p>";
+                }
+                else
+                {
+                    $html .= "<p> There is no overview available</p>";
+                }
+
             $html .= "</div>";
 
             $html .= "<div class = HorizontalLine></div>";
 
             $html .= "<div id = BottonInfo>";
-                $html .= "<span> Budget:" . $data["Budget"] . "$</span>";
-                $html .= "<span> Revenue:" .  $data["Revenue"] . "$</span>";
+                $html .= "<span> Number of Episodes: " . $data["number_of_episodes"] . " <br></span>";
+                $html .= "<span> Number of Seasons:  " .  $data["number_of_seasons"] . " </span>";
             $html .= "</div>"; 
 
             $html .= "<div class = HorizontalLine></div>";
@@ -117,15 +125,8 @@
 
     function GetGenreData($sqliConnection)
     {
-        if($_GET["is"] == "film")
-        {   
-            $queryGenre = "SELECT * FROM filmgenre WHERE Product_Id = " . $_GET["id"]."";
-        }
-        else if ($_GET["is"] == "tvshow")
-        {
-            $queryGenre = "SELECT * FROM tvshowgenre WHERE Product_Id = " . $_GET["id"]."";
-        }
-
+        $queryGenre = "SELECT * FROM tvshowgenre WHERE Product_Id = " . $_GET["id"]."";
+    
         $filmGenre = $sqliConnection->query($queryGenre);
 
         $filmGenres = array();
@@ -143,7 +144,7 @@
 
     function GetShowData($sqliConnection)
     {
-        $queryData = "SELECT * FROM film WHERE Product_Id = " . $_GET["id"]."";
+        $queryData = "SELECT * FROM tvshow WHERE Product_Id = " . $_GET["id"]."";
 
         $filmData = $sqliConnection->query($queryData);
 

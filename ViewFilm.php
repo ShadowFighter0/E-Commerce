@@ -74,8 +74,8 @@
             $html .= "<div class = HorizontalLine></div>";
 
             $html .= "<div id=SubText>";
-                $html .= "<span > Release Date: " . $data["Release_Date"] . "</span>";
-                $html .= "<span >Duration: " . $data["Duration"] . " mins </span>";
+            $html .= "<span > Release Date: " . $data["Release_Date"] . "</span>";
+            $html .= "<span >Duration: " . $data["Duration"] . " mins </span>";
                 
                 $html .= "<br><br>";
 
@@ -92,7 +92,16 @@
 
             $html .= "<div id = Overview>";
                 $html .= "<h2>Overview:</h2>";
-                $html .= "<p>" . $data["overview"] ."</p>";
+                
+                if(strlen($data["overview"]) > 0)
+                {
+                    $html .= "<p>" . $data["overview"] ."</p>";
+                }
+                else
+                {
+                    $html .= "<p> There is no overview available</p>";
+                }
+               
             $html .= "</div>";
 
             $html .= "<div class = HorizontalLine></div>";
