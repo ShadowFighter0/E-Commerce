@@ -15,7 +15,7 @@
             $this->html .= "<a class = Left href=\"Shop.php?show=TvShows\">Tv Shows</a>";
             $this->html .= "". $this->CreateSearchBar() ."";
             $this->html .= "<a class = Right href=\"LogIn.php\">Log In</a>";
-            $this->html .= "<a class = Right href=\"NewUser.php\">Sign Up</a>";
+            $this->html .= "<a class = Right href=\"SignUp.php\">Sign Up</a>";
             $this->html .= "</ul>";
             $this->html .= "</div>";
 
@@ -24,7 +24,7 @@
 
         function CreateSearchBar()
         {
-            $searchbar = "<div id=\"search-container\">";
+            $searchbar  = "<div id=\"search-container\">";
             $searchbar .= "<form method='post' action ='Shop.php'>";
             $searchbar .= "<input type = 'text' name='search' placeholder = \"Search...\">";
             $searchbar .= "<button type=\"submit\">Submit</button>";

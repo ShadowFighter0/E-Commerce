@@ -1,0 +1,61 @@
+*{
+    box-sizing: border-box;
+}
+
+body{
+    background-color: rgb(24,26,27);
+    margin: 1%;
+    font-family: Arial, Helvetica, sans-serif;
+    color: whitesmoke;
+}
+
+#Container{
+    display: block;
+    margin: 3%;
+    width: 90%;
+    height: 90%;
+    border: 1px solid whitesmoke;
+}
+
+#Container p{
+    margin-top: 3%;
+    text-align: center;
+    font-size: 2em;
+}
+
+#Container #FirstField{
+    margin: auto;
+    margin-top: 3%;
+    width: 90%;
+    height: 15%;
+    border: 1px solid whitesmoke;
+}
+
+#Container .Field{
+    margin: auto;
+    width: 90%;
+    height: 15%;
+    border: 1px solid whitesmoke;
+}
+
+#Container span {
+    margin: 20% 3%;
+    font-size: 1.2em;
+}
+
+#Container .Input {
+    float: right;
+    margin: 1% 30%;
+}
+
+#Container input {
+    font-size: 17px;
+    border: none;
+}
+
+#Container button{
+    width: 50%;
+    height: 5%;
+    margin: 1% 25%;
+}
+

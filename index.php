@@ -1,7 +1,7 @@
 <?php
     
     require_once "WebBuilders/WebBuilder.php";
-    define ("NUM_BOXES", 6);
+    define ("NUM_BOXES", 5);
 
     echo IndexPage();
 

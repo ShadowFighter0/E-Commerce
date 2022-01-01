@@ -3,11 +3,11 @@
     require_once "WebBuilders" . DIRECTORY_SEPARATOR . "mysqli.php";
     require_once "WebBuilders" . DIRECTORY_SEPARATOR . "NavBar.php";
 
-    define ("NAVBAR_STYLE_PATH", "CSS/NavBar.css");    
-    define ("INDEX_STYLE_PATH", "CSS/Index.css");   
-    define ("MOVIE_STYLE_PATH", "CSS/Movie.css");
-    define ("VIEWFILM_STYLE_PATH", "CSS/ViewFilm.css");      
-    define ("VIEWTVSHOW_STYLE_PATH", "CSS/ViewTvShow.css");      
+    define ("NAVBAR_STYLE_PATH", "CSS". DIRECTORY_SEPARATOR . "NavBar.css");    
+    define ("INDEX_STYLE_PATH", "CSS". DIRECTORY_SEPARATOR . "Index.css");   
+    define ("MOVIE_STYLE_PATH", "CSS" . DIRECTORY_SEPARATOR . "Movie.css");
+    define ("VIEWFILM_STYLE_PATH", "CSS" . DIRECTORY_SEPARATOR . "ViewFilm.css");      
+    define ("VIEWTVSHOW_STYLE_PATH", "CSS" . DIRECTORY_SEPARATOR . "ViewTvShow.css");      
 
     define("IMG_BASEPATH", "https://image.tmdb.org/t/p/w500/");
 
@@ -44,13 +44,6 @@ class WebBuilder{
     {
         $html = "<link rel=\"stylesheet\" href=" . VIEWTVSHOW_STYLE_PATH . ">";        
         $html .= "<link rel=\"stylesheet\" href=" . NAVBAR_STYLE_PATH . ">";
-
-        return $html;
-    }
-
-    function WriteHeaderLinksForShop()
-    {
-        $html = "<link rel=\"stylesheet\" href=" . NAVBAR_STYLE_PATH . ">";
 
         return $html;
     }

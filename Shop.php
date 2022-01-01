@@ -16,7 +16,7 @@
         $html .= "<head>";
 
         //Write Head
-        $html .= $webBuilder->WriteHeaderLinksForShop();
+        $html .= $webBuilder->WriteHeaderLinksForIndex();
         
         $html .= "</head>";
 
@@ -35,53 +35,54 @@
     {
         $html = $webBuilder->CreateNavBar();
 
-        $html .= CreateInitialText();
-
-        //Start Films Section
-        $html .= "<p> Films </p>";
-        $html .= "<div class = line></div>";
-
-        //Get the 5 first MOVIES
-        $sqlConnection = $webBuilder->sql->OpenSqli();
-        $query = "SELECT * FROM film WHERE Product_Id < " . NUM_BOXES ."";
-        $result = $sqlConnection->query($query);
-
-        $webBuilder->sql->CloseConnection();
-        $html .= "<div class = folder>";
-        for($i = 0; $i < $result->num_rows; $i++)
+        if(isset($_GET["show"]))
         {
-            $result->data_seek($i);
-            $row = $result->fetch_array(MYSQLI_ASSOC);
+            $is = $_GET["show"];
+            
+            if ($is == "Films")
+            {
+                $html .= "<p> Films </p>";
+            }
+            else
+            {
+                $html .= "<p> TvShows </p>";
+            }
 
-            $html .= $webBuilder->CreateViewFilm($row, "film");
+            $html .= "<div class = line></div>";
+
+            if ($is == "Films")
+            {
+                $query = "SELECT * FROM film";
+            }
+            else
+            {
+                $query = "SELECT * FROM tvshow";
+            }
+
+            $sqliConnection = $webBuilder->sql->OpenSqli();
+
+            $result = $sqliConnection->query($query);
+            $webBuilder->sql->CloseConnection();
+
+            $html .= "<div class = folder>";
+
+            for($i = 0; $i < $result->num_rows; $i++)
+            {
+                $result->data_seek($i);
+                $row = $result->fetch_array(MYSQLI_ASSOC);
+
+                if ($is == "Films")
+                {
+                    $html .= $webBuilder->CreateViewFilm($row);
+                }
+                else
+                {
+                    $html .= $webBuilder->CreateViewTvShow($row);
+                }
+            }
+
+            $html .= "</div>";
         }
-        $html .= "</div>";
-
-        //Separate
-        
-        $html .= "<div class = separator></div>";
-
-
-        //TVSHOWS
-        $html .= "<p> TvShows </p>";
-        $html .= "<div class = line></div>";
-
-        $sqlConnection = $webBuilder->sql->OpenSqli();
-        $query = "SELECT * FROM tvshow WHERE Product_Id < " . NUM_BOXES ."";
-
-        $result = $sqlConnection->query($query);
-        $webBuilder->sql->CloseConnection();
-
-        $html .= "<div class = folder>";
-
-        for($i = 0; $i < $result->num_rows; $i++)
-        {
-            $result->data_seek($i);
-            $row = $result->fetch_array(MYSQLI_ASSOC);
-            $html .= $webBuilder->CreateViewFilm($row,"tvshow");
-        }
-
-        $html .= "</div>";
 
         return $html;
     }
