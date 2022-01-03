@@ -14,12 +14,42 @@
             $this->html .= "<a class = Left href=\"Shop.php?show=Films\">Films</a>";
             $this->html .= "<a class = Left href=\"Shop.php?show=TvShows\">Tv Shows</a>";
             $this->html .= "". $this->CreateSearchBar() ."";
-            $this->html .= "<a class = Right href=\"LogIn.php\">Log In</a>";
-            $this->html .= "<a class = Right href=\"SignUp.php\">Sign Up</a>";
+
+            if (isset($_COOKIE["login"]))
+            {
+
+                echo $_COOKIE["login"];
+                if ($_COOKIE["login"] == 1)
+                {
+                    $this->CreateSignedNavBar();
+                }
+                else
+                {
+                    $this->CreateNotSignedNavBar();
+                }
+            }
+            else
+            {
+                $this->CreateNotSignedNavBar();
+            }
+
             $this->html .= "</ul>";
             $this->html .= "</div>";
+            
 
             return $this->html;
+        }
+
+        function CreateSignedNavBar()
+        {
+            $this->html .= "<a class = Right href = \"MyAccount.php\" > My Account </a>";
+            $this->html .= "<a class = Right href = \"ShoppingList.php\"> Shopping List </a>";
+        }
+        
+        function CreateNotSignedNavBar()
+        {
+            $this->html .= "<a class = Right href = \"LogIn.php\">Log In</a>";
+            $this->html .= "<a class = Right href = \"SignUp.php\">Sign Up</a>";
         }
 
         function CreateSearchBar()

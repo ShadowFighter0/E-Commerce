@@ -1,17 +1,15 @@
 <?php
 
-    require_once "WebBuilders" . DIRECTORY_SEPARATOR . "mysqli.php";
-    require_once "WebBuilders" . DIRECTORY_SEPARATOR . "NavBar.php";
+    require_once "mysqli.php";
+    require_once "NavBar.php";
 
     define ("NAVBAR_STYLE_PATH", "CSS". DIRECTORY_SEPARATOR . "NavBar.css");    
     define ("INDEX_STYLE_PATH", "CSS". DIRECTORY_SEPARATOR . "Index.css");   
     define ("MOVIE_STYLE_PATH", "CSS" . DIRECTORY_SEPARATOR . "Movie.css");
-    define ("VIEWFILM_STYLE_PATH", "CSS" . DIRECTORY_SEPARATOR . "ViewFilm.css");      
-    define ("VIEWTVSHOW_STYLE_PATH", "CSS" . DIRECTORY_SEPARATOR . "ViewTvShow.css");      
+    define ("VIEWFILM_STYLE_PATH", "CSS" . DIRECTORY_SEPARATOR . "View.css");   
 
     define ("IMG_BASEPATH", "https://image.tmdb.org/t/p/w500/");
 
-    define ("","");
 class WebBuilder{
 
     private $navBar;
@@ -33,17 +31,9 @@ class WebBuilder{
         return $html;
     }
 
-    function WriteHeaderLinksForViewFilm()
+    function WriteHeaderLinksForView()
     {
         $html = "<link rel=\"stylesheet\" href=" . VIEWFILM_STYLE_PATH . ">";        
-        $html .= "<link rel=\"stylesheet\" href=" . NAVBAR_STYLE_PATH . ">";
-
-        return $html;
-    }
-
-    function WriteHeaderLinksForViewTvShow()
-    {
-        $html = "<link rel=\"stylesheet\" href=" . VIEWTVSHOW_STYLE_PATH . ">";        
         $html .= "<link rel=\"stylesheet\" href=" . NAVBAR_STYLE_PATH . ">";
 
         return $html;
@@ -56,7 +46,7 @@ class WebBuilder{
 
     function CreateViewFilm($movieInfo)
     {
-        $html = "<div class= movie> <a href= \"ViewFilm.php?id=" . $movieInfo["Product_Id"] ."\">";
+        $html = "<div class= movie> <a href= \"View.php?show=film&id=" . $movieInfo["Product_Id"] ."\">";
             $html .= "<img src = \"" . IMG_BASEPATH . $movieInfo["IMG_Poster"] . "\">";
             $html .= "<div class = movie-info>";
                 $html .= "<h3>". $movieInfo["Title"] . "</h3>";
@@ -70,7 +60,7 @@ class WebBuilder{
 
     function CreateViewTvShow($showInfo)
     {
-        $html = "<div class= movie> <a href= \"ViewTvShow.php?id=" . $showInfo["Product_Id"] ."\">";
+        $html = "<div class= movie> <a href= \"View.php?show=tvshow&id=" . $showInfo["Product_Id"] ."\">";
             $html .= "<img src = \"" . IMG_BASEPATH . $showInfo["IMG_Poster"] . "\">";
             $html .= "<div class = movie-info>";
                 $html .= "<h3>". $showInfo["Title"] . "</h3>";

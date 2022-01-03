@@ -9,7 +9,7 @@
         $html = "<html>";
         $html .= "<head>";
 
-            $html .= "<link rel=\"stylesheet\" href=\"CSS" . DIRECTORY_SEPARATOR ."SignUp.css\"/>";
+            $html .= "<link rel=\"stylesheet\" href=\"CSS" . DIRECTORY_SEPARATOR ."Confirm.css\"/>";
 
         $html .= "</head>";
 
@@ -48,17 +48,20 @@
 
                 if ($webBuilder->DeHashPassword($password, $row["passwordHashed"]))
                 {
-                    echo "<p> Welcome back " . $row["name"] . ".</p>";
+                    setcookie("login", "1", time() + 60 *60);
+
+                    //Redirect to index Signed in
+                    header("Location: index.php");
                 }
             }
             else
             {
-                echo "<p>The email is incorrect. Please go <a href =\"LogIn.php \"> here </a> and try again.</p>";
+                return "<p>The email is incorrect. Please go <a href =\"LogIn.php \"> here </a> and try again.</p>";
             }
         }
         else
         {
-            echo "<p>Something went wrong. Please go <a href= \"LogIn.php\"> here </a></p>";
+            return "<p>Something went wrong. Please go <a href= \"LogIn.php\"> here </a></p>";
         }
     }
 ?>

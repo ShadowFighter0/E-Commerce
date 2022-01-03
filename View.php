@@ -1,6 +1,6 @@
 <?php
 
-    require_once "WebBuilders/WebBuilder.php";
+    require_once "WebBuilders" . DIRECTORY_SEPARATOR . "WebBuilder.php";
         
     echo ViewPage();
 
@@ -15,7 +15,7 @@
         $html .= "<head>";
 
         //Write Head
-        $html .= $webBuilder->WriteHeaderLinksForViewFilm();
+        $html .= $webBuilder->WriteHeaderLinksForView();
         
         $html .= "</head>";
 
@@ -41,23 +41,43 @@
         //Get the selected thing
         if(isset($_GET["id"]))
         {
-            $sqliConnection = $webBuilder->sql->OpenSqli();
+            if(isset($_GET["show"]))
+            {
+                $sqliConnection = $webBuilder->sql->OpenSqli();
 
-            $data = GetFilmData($sqliConnection);
-            $genres = GetGenreData($sqliConnection);
+                if($_GET["show"] == "film")
+                {
+                    $data = GetFilmData($sqliConnection);
+                    $genres = GetFilmGenreData($sqliConnection);
+                    
+                    $webBuilder->sql->CloseConnection();
 
-            $webBuilder->sql->CloseConnection(); 
-            
-            $html .= CreateFilmView($data, $genres, $webBuilder);
+                    $html .= CreateView($data, $genres, $webBuilder);
+                }
+                else
+                {
+                    $data = GetTvShowData($sqliConnection);
+                    $genres = GetTvShowGenreData($sqliConnection);
+                    
+                    $webBuilder->sql->CloseConnection();
+
+                    $html .= CreateView($data, $genres, $webBuilder);
+                }
+            }
+            else
+            {
+                $html .= "<h2> Something went wrong. Try going to the main page </h2>";
+            }
         }
         else
         {
             $html .= "<h2> Something went wrong. Try going to the main page </h2>";
         }
+
         return $html;
     }
 
-    function CreateFilmView($data, $genres, $webBuilder)
+    function CreateView($data, $genres, $webBuilder)
     {
         $html = "<div id = Viewer>";
             $html .= "<div id= Left>";
@@ -74,9 +94,18 @@
             $html .= "<div class = HorizontalLine></div>";
 
             $html .= "<div id=SubText>";
-            $html .= "<span > Release Date: " . $data["Release_Date"] . "</span>";
-            $html .= "<span >Duration: " . $data["Duration"] . " mins </span>";
-                
+
+            if($_GET["show"] == "film")
+            {
+                $html .= "<span > Release Date: " . $data["Release_Date"] . "</span>";
+                $html .= "<span >Duration: " . $data["Duration"] . " mins </span>";
+            }
+            else
+            {
+                $html .= "<span>First Air: " . $data["first_air_date"] . "</span>";
+                $html .= "<span>Last Air: "  . $data["last_air_date"]  . "</span>";
+            }
+            
                 $html .= "<br><br>";
 
                 $html .= "<span> Genres:</span>";
@@ -107,8 +136,18 @@
             $html .= "<div class = HorizontalLine></div>";
 
             $html .= "<div id = BottonInfo>";
+
+            if($_GET["show"] == "film")
+            {
                 $html .= "<span> Budget:" . $data["Budget"] . "$</span>";
                 $html .= "<span> Revenue:" .  $data["Revenue"] . "$</span>";
+            }
+            else
+            {
+                $html .= "<span> Number of Episodes: " . $data["number_of_episodes"] . " <br><br></span>";
+                $html .= "<span> Number of Seasons:  " .  $data["number_of_seasons"] . " </span>";
+            }
+                
             $html .= "</div>"; 
 
             $html .= "<div class = HorizontalLine></div>";
@@ -124,7 +163,7 @@
         return $html;
     }
 
-    function GetGenreData($sqliConnection)
+    function GetFilmGenreData($sqliConnection)
     {   
         $queryGenre = "SELECT * FROM filmgenre WHERE Product_Id = " . $_GET["id"]."";
 
@@ -143,7 +182,7 @@
         return $filmGenres;
     }
 
-    function GetFilmData($sqliConnection)
+    function GetFilmData($sqliConnection)                   
     {
         $queryData = "SELECT * FROM film WHERE Product_Id = " . $_GET["id"]."";
 
@@ -156,5 +195,35 @@
         return $rowFilmData;
     }
 
+    function GetTvShowGenreData($sqliConnection)
+    {
+        $queryGenre = "SELECT * FROM tvshowgenre WHERE Product_Id = " . $_GET["id"]."";
+    
+        $filmGenre = $sqliConnection->query($queryGenre);
 
+        $filmGenres = array();
+
+        //Get Genres rows
+        for($i = 0; $i < $filmGenre->num_rows; $i++)
+        {
+            $filmGenre->data_seek($i);
+            $rowGenre = $filmGenre->fetch_array(MYSQLI_ASSOC);
+            $filmGenres[$i] = $rowGenre["genre"];
+        }
+
+        return $filmGenres;
+    }
+
+    function GetTvShowData($sqliConnection)
+    {
+        $queryData = "SELECT * FROM tvshow WHERE Product_Id = " . $_GET["id"]."";
+
+        $filmData = $sqliConnection->query($queryData);
+
+        //Get filmData
+        $filmData->data_seek(0);
+        $rowFilmData = $filmData->fetch_array(MYSQLI_ASSOC);
+
+        return $rowFilmData;
+    }
 ?>

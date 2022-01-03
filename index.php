@@ -17,14 +17,14 @@
 
         //Write Head
         $html .= $webBuilder->WriteHeaderLinksForIndex();
-        
+
         $html .= "</head>";
 
         //Open Body
         $html .= "<body>";
 
         $html .= CreateBody($webBuilder);        
-        
+
         $html .= "</body>";
         $html .= "</html>";
 
