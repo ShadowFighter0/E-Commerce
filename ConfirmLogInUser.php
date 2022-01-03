@@ -1,0 +1,64 @@
+<?php
+
+    require_once "WebBuilders/WebBuilder.php";
+
+    echo CreateConfirmLogIn();
+
+    function CreateConfirmLogIn()
+    {
+        $html = "<html>";
+        $html .= "<head>";
+
+            $html .= "<link rel=\"stylesheet\" href=\"CSS" . DIRECTORY_SEPARATOR ."SignUp.css\"/>";
+
+        $html .= "</head>";
+
+        $html .= "<body>";
+
+            $html .= CreateBody();
+
+        $html .= "</body>";
+        $html .= "</html>";
+
+        return $html;
+    }
+
+    function CreateBody()
+    {
+        if (isset($_POST["Email"])
+        and isset($_POST["Password"]))
+        {
+            $webBuilder = new WebBuilder();
+
+            $sqliConnection = $webBuilder->sql->OpenSqli();
+
+            $jquery = $sqliConnection->prepare("SELECT * FROM users WHERE Email = ?");
+            $jquery->bind_param("s", $_POST["Email"]);
+            $jquery->execute();
+            $result = $jquery->get_result();
+
+            $webBuilder->sql->CloseConnection();
+
+            $result->data_seek(0);
+            $row = $result->fetch_array(MYSQLI_ASSOC);
+
+            if ($result->num_rows > 0)
+            {
+                $password = $_POST["Password"];
+
+                if ($webBuilder->DeHashPassword($password, $row["passwordHashed"]))
+                {
+                    echo "<p> Welcome back " . $row["name"] . ".</p>";
+                }
+            }
+            else
+            {
+                echo "<p>The email is incorrect. Please go <a href =\"LogIn.php \"> here </a> and try again.</p>";
+            }
+        }
+        else
+        {
+            echo "<p>Something went wrong. Please go <a href= \"LogIn.php\"> here </a></p>";
+        }
+    }
+?>

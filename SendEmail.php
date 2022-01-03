@@ -2,43 +2,75 @@
 
     require_once "WebBuilders" . DIRECTORY_SEPARATOR . "WebBuilder.php";
 
+
     if (isset($_POST["Name"]) 
     and isset($_POST["Email"]) 
     and isset($_POST["Password"]) 
     and isset($_POST["ConfirmPassword"]))
     {
-        $email = $_POST["Email"];
-
-        $webBuilder = new WebBuilder();
-        $query = "SELECT * FROM users WHERE email = '$email'";
-    
-        $sqliConnection = $webBuilder->sql->OpenSqli();
-        $results = $sqliConnection->query($query);
-        $webBuilder->sql->CloseConnection();
-    
-        if ($results->num_rows > 0)
+        if($_POST["Password"] == $_POST["ConfirmPassword"])
         {
-            $string = "<p> User Created </p>";
+            $email = $_POST["Email"];
 
-            //TODO Insert user in table
+            $webBuilder = new WebBuilder();
+    
+            //DEBUG
 
             $sqliConnection = $webBuilder->sql->OpenSqli();
-            $query = ""
-            $results = $sqliConnection->query($query);
+
+            $sqliConnection->query("Delete From users");
+
             $webBuilder->sql->CloseConnection();
 
-            $string .= "<br><br><p> Check your email to verify your email </p>";
+
             
-            //TODO Send Email
-            echo $string;
+            $sqliConnection = $webBuilder->sql->OpenSqli();
+    
+            $jquery = $sqliConnection->prepare("SELECT * FROM users WHERE email = ?");
+            $jquery->bind_param("s", $email);
+            $jquery->execute();
+            
+            $results = $jquery->get_result();
+            
+            $webBuilder->sql->CloseConnection();
+        
+            if ($results->num_rows == 0)
+            {
+                $pass = $_POST["Password"];
+    
+                $passHashed = $webBuilder->HashPassword($pass);
+    
+                $sqliConnection = $webBuilder->sql->OpenSqli();
+
+                $results = $sqliConnection->query("SELECT * FROM users");
+
+
+                $userId = $results->num_rows;
+                $name = mysqli_real_escape_string($sqliConnection, $_POST["Name"]);
+                $email = mysqli_real_escape_string($sqliConnection, $email);
+                $passHashed = mysqli_real_escape_string($sqliConnection, $passHashed);
+                $false = (int)false;
+
+                $jquery = $sqliConnection->prepare("INSERT INTO users VALUES ($userId,'$name','$email','$passHashed',$false)");
+                $jquery->execute();
+    
+                $webBuilder->sql->CloseConnection();
+                
+                //TODO Send Email
+                echo "<p> User Created </p><br><br><p> Check your email to verify your email.</p>";
+            }
+            else
+            {
+                echo "<p> This email has already been registered. Please Log In <a href = \"LogIn.php\">here</a> or use a different email.";
+            }
         }
         else
         {
-            echo "<p> This email has been already registered. Please Log In <a href = \"LogIn.php\">here</a>.";
+            echo "<p> Password does not match. Please go <a href =\"SignUp.php\">here</a> and try again.</p>";
         }
     }
     else
     {
-        echo "<p> Something went wrong. Please go <a href =\"SignUp.php\">here</a> </p>";
+        echo "<p> Something went wrong. Please go <a href =\"SignUp.php\">here</a> and try again.</p>";
     }
 ?>

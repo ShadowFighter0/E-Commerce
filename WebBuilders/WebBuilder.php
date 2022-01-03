@@ -9,8 +9,9 @@
     define ("VIEWFILM_STYLE_PATH", "CSS" . DIRECTORY_SEPARATOR . "ViewFilm.css");      
     define ("VIEWTVSHOW_STYLE_PATH", "CSS" . DIRECTORY_SEPARATOR . "ViewTvShow.css");      
 
-    define("IMG_BASEPATH", "https://image.tmdb.org/t/p/w500/");
+    define ("IMG_BASEPATH", "https://image.tmdb.org/t/p/w500/");
 
+    define ("","");
 class WebBuilder{
 
     private $navBar;
@@ -77,7 +78,6 @@ class WebBuilder{
             $html .= "</div>";
         $html .= "</a></div>";
         
-
         return $html;
     }
 
@@ -85,7 +85,15 @@ class WebBuilder{
     {
         return IMG_BASEPATH;
     }
+
+    function HashPassword($password)
+    {
+        return password_hash($password, PASSWORD_DEFAULT);
+    }
+
+    function DeHashPassword($passwordIntroducedByuser, $passwordHashedFromDb)
+    {
+        return password_verify($passwordIntroducedByuser, $passwordHashedFromDb);
+    }
 }
-
-
 ?>
