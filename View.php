@@ -151,9 +151,10 @@
             $html .= "</div>"; 
 
             $html .= "<div class = HorizontalLine></div>";
-
             $html .= "<div id=ShopButton>";
+            $html .= "<form method='post' action = 'AddToShoppingList.php?type=" . $_GET["show"] . "&id=" . $_GET["id"] . "'>";
             $html .= "<button> Add To Shoping List</button>";
+            $html .= "</form>";
             $html .= "<span id=PriceUp> Price: <br></span>";
             $html .= "<span id=PriceDown>" . $data["Price"] . "$</span>";
             $html .= "</div>";

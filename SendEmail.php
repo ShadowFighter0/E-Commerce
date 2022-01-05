@@ -64,7 +64,6 @@
 
                     $results = $sqliConnection->query("SELECT * FROM users");
 
-
                     $userId = $results->num_rows;
                     $name = mysqli_real_escape_string($sqliConnection, $_POST["Name"]);
                     $email = mysqli_real_escape_string($sqliConnection, $email);

@@ -17,8 +17,6 @@
 
             if (isset($_COOKIE["login"]))
             {
-
-                echo $_COOKIE["login"];
                 if ($_COOKIE["login"] == 1)
                 {
                     $this->CreateSignedNavBar();

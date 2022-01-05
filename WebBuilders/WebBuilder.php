@@ -41,7 +41,19 @@ class WebBuilder{
 
     function CreateNavBar()
     {
+        $this->AddTimeToSession();
         return $this->navBar->CreateNavBar();
+    }
+
+    function AddTimeToSession()
+    {
+        if (isset($_COOKIE["login"]) and $_COOKIE["login"] == 1)
+        {
+            $email = $_COOKIE["email"];
+            
+            setcookie("login", "1", time() + 30 * 60);
+            setcookie("email", $email, time() + 30 * 60);
+        }
     }
 
     function CreateViewFilm($movieInfo)
