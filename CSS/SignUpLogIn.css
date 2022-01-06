@@ -49,3 +49,12 @@ body {
     height: 5%;
     margin: 1% 25%;
 }
+
+#Container a{
+    
+    color:whitesmoke;
+}
+#Container a p {
+    font-size: 1.3em;
+    text-align: center;
+}

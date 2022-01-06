@@ -1,6 +1,12 @@
 <?php
 
-    require_once "WebBuilders" . DIRECTORY_SEPARATOR . "WebBuilder.php";
+use PHPMailer\PHPMailer\PHPMailer;
+
+require_once "WebBuilders" . DIRECTORY_SEPARATOR . "WebBuilder.php";
+
+    require_once "PHPMAILER" . DIRECTORY_SEPARATOR . "Exception.php";
+    require_once "PHPMAILER" . DIRECTORY_SEPARATOR . "SMTP.php";
+    require_once "PHPMAILER" . DIRECTORY_SEPARATOR . "PHPMAILER.php";
 
     echo CreateSendEmail();
 
@@ -32,17 +38,6 @@
                 $email = $_POST["Email"];
 
                 $webBuilder = new WebBuilder();
-        
-                //DEBUG
-
-                $sqliConnection = $webBuilder->sql->OpenSqli();
-
-                $sqliConnection->query("Delete From users");
-
-                $webBuilder->sql->CloseConnection();
-
-                //CLOSEDEBUG
-
                 
                 $sqliConnection = $webBuilder->sql->OpenSqli();
         
@@ -51,35 +46,47 @@
                 $jquery->execute();
                 
                 $results = $jquery->get_result();
-                
-                $webBuilder->sql->CloseConnection();
             
                 if ($results->num_rows == 0)
                 {
                     $pass = $_POST["Password"];
         
                     $passHashed = $webBuilder->HashPassword($pass);
-        
-                    $sqliConnection = $webBuilder->sql->OpenSqli();
 
-                    $results = $sqliConnection->query("SELECT * FROM users");
-
-                    $userId = $results->num_rows;
+                    $emailKey = GenerateRandomCode();
                     $name = mysqli_real_escape_string($sqliConnection, $_POST["Name"]);
                     $email = mysqli_real_escape_string($sqliConnection, $email);
-                    $passHashed = mysqli_real_escape_string($sqliConnection, $passHashed);
-                    $false = (int)false;
 
-                    $jquery = $sqliConnection->prepare("INSERT INTO users VALUES ($userId,'$name','$email','$passHashed',$false)");
-                    $jquery->execute();
-        
-                    $webBuilder->sql->CloseConnection();
-                    
-                    //TODO Send Email
-                    echo "<p> User Created </p><br><br><p> Check your email to verify your email.</p>";
+
+                    $to      = $email;
+                    $subject = 'Confirmation Email';
+                    $message = "Please click <a href = localhost/activate.php?$emailKey> here <a> to activate your key. If that didnt work try copying and pasting this adresslocalhost/activate.php?$emailKey.";
+                    $headers = 'From: apidprieto21@gmail.com'       . "\r\n" .
+                    'Reply-To: apidprieto21@gmail.com' . "\r\n" .
+                    'X-Mailer: PHP/' . phpversion();
+
+                    if (mail($to, $subject, $message, $headers))
+                    {
+                        $sqliConnection = $webBuilder->sql->OpenSqli();
+
+                        $results = $sqliConnection->query("SELECT * FROM users");
+                        $userId = $results->num_rows;
+                        $passHashed = mysqli_real_escape_string($sqliConnection, $passHashed);
+                        $false = (int)false;
+                        
+                        $jquery = $sqliConnection->prepare("INSERT INTO users VALUES ($userId,'$name','$email','$passHashed',$false, '$emailKey')");
+                        $jquery->execute();
+            
+                        $webBuilder->sql->CloseConnection();
+                        
+                       
+                        echo "<p> User Created </p><br><br><p> Check your email to verify your email.</p>";
+                    }
                 }
                 else
                 {
+                    
+                    $webBuilder->sql->CloseConnection();
                     echo "<p> This email has already been registered. Please Log In <a href = \"LogIn.php\">here</a> or use a different email.";
                 }
             }
@@ -92,5 +99,18 @@
         {
             echo "<p> Something went wrong. Please go <a href =\"SignUp.php\">here</a> and try again.</p>";
         }
+    }
+
+
+    function GenerateRandomCode()
+    {
+        $characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+        $result = '';
+        for($i=0; $i < 50; $i++)
+        {
+            $result .= $characters[mt_rand(0, 61)];
+        }
+
+        return $result;
     }
 ?>

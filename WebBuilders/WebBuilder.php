@@ -6,7 +6,8 @@
     define ("NAVBAR_STYLE_PATH", "CSS". DIRECTORY_SEPARATOR . "NavBar.css");    
     define ("INDEX_STYLE_PATH", "CSS". DIRECTORY_SEPARATOR . "Index.css");   
     define ("MOVIE_STYLE_PATH", "CSS" . DIRECTORY_SEPARATOR . "Movie.css");
-    define ("VIEWFILM_STYLE_PATH", "CSS" . DIRECTORY_SEPARATOR . "View.css");   
+    define ("VIEWFILM_STYLE_PATH", "CSS" . DIRECTORY_SEPARATOR . "View.css"); 
+    define ("SHOPINGLIST_STYLE_PATH", "CSS" . DIRECTORY_SEPARATOR . "ShoppingList.css");
 
     define ("IMG_BASEPATH", "https://image.tmdb.org/t/p/w500/");
 
@@ -39,6 +40,14 @@ class WebBuilder{
         return $html;
     }
 
+    function WriteHeaderLinksForShoppingList()
+    {
+        $html = "<link rel=\"stylesheet\" href=" . SHOPINGLIST_STYLE_PATH . ">";        
+        $html .= "<link rel=\"stylesheet\" href=" . NAVBAR_STYLE_PATH . ">";
+
+        return $html;
+    }
+
     function CreateNavBar()
     {
         $this->AddTimeToSession();
@@ -65,7 +74,6 @@ class WebBuilder{
                 $html .= "<p>" . $movieInfo["Score"] . "</p>";
             $html .= "</div>";
         $html .= "</a></div>";
-        
 
         return $html;
     }
@@ -80,6 +88,27 @@ class WebBuilder{
             $html .= "</div>";
         $html .= "</a></div>";
         
+        return $html;
+    }
+
+    function CreateShopView($productResult, $shopList)
+    {
+        $html = "<div class= shopMovie><a href=View.php?show=film&id=" . $productResult["Product_Id"] .">";
+
+        $html .= "<img src = \"" . IMG_BASEPATH . $productResult["IMG_Background"] . "\">";
+
+        $html .= "<div class = movie-info>";
+            $html .= "<h3 id=Title>". $productResult["Title"] . "</h3>";
+            $html .= "<p id =Price> Price: " . $productResult["Price"] . "$</p>";
+            $html .= "<p id =Amount> Amount: ". $shopList["Amount"] . "</h3>";
+        $html .= "</a></div>";
+        $html .= "<div class = shop-links>";
+            $html .= "<a id = Left  href= DeleteFromShopingCart.php?shopId=" . $shopList["ShopingItem_Id"] ."&amount=1>Remove One</a>";
+            $html .= "<a id = Right href= DeleteFromShopingCart.php?shopId=" . $shopList["ShopingItem_Id"] ."&amount=" . $shopList["Amount"] .">Remove All</a>";
+        $html .= "</div>";
+        
+        $html .= "</div>";
+    
         return $html;
     }
 

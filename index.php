@@ -47,6 +47,7 @@
         $result = $sqlConnection->query($query);
 
         $webBuilder->sql->CloseConnection();
+        
         $html .= "<div class = folder>";
         for($i = 0; $i < $result->num_rows; $i++)
         {

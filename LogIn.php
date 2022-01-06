@@ -44,6 +44,9 @@ function CreateBody()
         $html .= "</div>";
 
         $html .= "<button type=\"submit\">Submit</button>";
+        $html .= "<br><a id=ForgotPassword href= ForgotPassword.php><p>Forgot my password</p></a>";
+
+
         $html .= "</form>";
 
     $html .= "</div>";

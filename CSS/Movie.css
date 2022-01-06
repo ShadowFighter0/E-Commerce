@@ -4,14 +4,14 @@
 
 .separator{
     clear: both;
+    margin: 3%;
 }
 
 .folder{   
-    
     display: block;
     width: 95%;
-    height: 70%;
-    margin: 0% 10%;
+    height: max-content;
+    margin: 1% 10%;
 }
 
 .folder a{

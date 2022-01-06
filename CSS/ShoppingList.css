@@ -1,0 +1,104 @@
+*{
+    box-sizing: border-box;
+}
+
+body {
+    overflow-x: hidden;
+    background-color: rgb(24,26,27);
+    margin: 1%;
+    font-family: Arial, Helvetica, sans-serif;
+    color: whitesmoke;
+}
+
+.folder {
+    width : 100%;
+    height: 30%;
+}
+
+.shopmovie {
+    clear:both;
+    box-shadow: 0 4px 5px rgba(0,0,0,0.2);
+    background-color: rgb(49, 49, 49);
+    width : 90%;
+    height: 30%;
+    margin: 5%;
+    color : whitesmoke;
+    word-wrap: break-word;
+}
+
+.shopmovie a {
+    color: whitesmoke;
+    text-decoration: none;
+}
+
+.shopmovie a:hover {
+    color: whitesmoke;
+    text-decoration: none;
+}
+
+.shopmovie a:visited {
+    color: whitesmoke;
+    text-decoration: none;
+}
+
+.shopmovie img {
+    max-width: 22%;
+    height: 100%;
+    width: 22%;
+    display: block;
+    float : left;
+    margin: auto 10% auto 0%;
+    margin-right: 10%;
+}
+
+.movie-info {
+    float : left;
+    width : 50%;
+    height: 50%;
+}
+
+.movie-info #Title {
+    float: left;
+    width: 100%;
+    height: auto;
+    font-size: 2rem;
+    margin: 1% auto 5%;
+}
+
+.movie-info #Price {
+    float: left;
+    font-size: 1.5rem;
+    width: 50%;
+    margin-top: 2%;
+}
+
+.movie-info #Amount {
+    float: left;
+    font-size: 1.5rem;
+    width: 50%;
+    margin-top: 2%;
+}
+
+.shop-links {
+    float:left;
+    height: 50%;
+    width: 50%;
+}
+
+.shop-links #Right {
+    margin-top: 10%;
+
+    float: left;
+
+    width: 50%;
+    height: 100%;
+}
+
+.shop-links #Left {
+    margin-top: 10%;
+
+    float: right;
+
+    width: 50%;
+    height: 100%;
+}

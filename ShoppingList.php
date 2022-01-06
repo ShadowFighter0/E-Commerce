@@ -16,7 +16,7 @@ require_once "WebBuilders" . DIRECTORY_SEPARATOR . "WebBuilder.php";
         $html .= "<head>";
 
         //Write Head
-        $html .= $webBuilder->WriteHeaderLinksForIndex();
+        $html .= $webBuilder->WriteHeaderLinksForShoppingList();
         
         $html .= "</head>";
 
@@ -35,7 +35,6 @@ require_once "WebBuilders" . DIRECTORY_SEPARATOR . "WebBuilder.php";
 
     function CreateBody($webBuilder)
     {
-
         $html = $webBuilder->CreateNavBar();
 
         if (isset($_COOKIE["login"]))
@@ -46,7 +45,7 @@ require_once "WebBuilders" . DIRECTORY_SEPARATOR . "WebBuilder.php";
             $jquery->bind_param("s", $_COOKIE["email"]);
             $jquery->execute();
             $userResult = $jquery->get_result();
-    
+
             $userResult = $userResult->fetch_array(MYSQLI_ASSOC);
 
             $jquery = $sqliConnection->prepare("SELECT * FROM shopinglist WHERE User_Id = ?");
@@ -56,10 +55,19 @@ require_once "WebBuilders" . DIRECTORY_SEPARATOR . "WebBuilder.php";
 
             if ($shopList->num_rows > 0)
             {
-                $shopList = $shopList->fetch_array(MYSQLI_ASSOC);
+                $html .= "<div id = folder>";
+                
+                for ($i = 0 ; $i < $shopList->num_rows; $i++)
+                {
+                    $shopList->data_seek($i);
+                    $shopListArray = $shopList->fetch_array(MYSQLI_ASSOC);
 
-                //Display
-                var_dump($shopList);
+                    $productResult = $sqliConnection->query("SELECT * FROM " . $shopListArray["Type"] ." WHERE Product_Id" . " = " . $shopListArray["Product_Id"] );
+                    $productResult = $productResult->fetch_array(MYSQLI_ASSOC);
+
+                    $html .= $webBuilder->CreateShopView($productResult, $shopListArray);
+                }
+                $html .= "</div>";
             }
             else
             {

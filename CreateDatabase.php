@@ -25,6 +25,7 @@
         $sql->query("DELETE FROM filmgenre");
         $sql->query("DELETE FROM tvshow");
         $sql->query("DELETE FROM tvshowgenre");
+        
         $sql->query("DELETE FROM users");
         $sql->query("DELETE FROM shopinglist");
 
