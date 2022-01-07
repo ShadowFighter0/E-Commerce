@@ -8,6 +8,8 @@
     define("MOVIES_GENRE_DB_URL","https://api.themoviedb.org/3/genre/movie/list?api_key=e4969e3fb066dfee11facfc052865079");
     define("SHOWS_GENRE_DB_URL","https://api.themoviedb.org/3/genre/tv/list?api_key=e4969e3fb066dfee11facfc052865079");
 
+    define("NUM_PAGES", "10");
+
     echo "<p> Creating DataBase </p>";
     
     CreateProducts();    
@@ -37,25 +39,28 @@
 
     function InsertFilms($sql)
     {
-        //Get first page movies JSON
-        $content = file_get_contents(MOVIES_DB_URL);
-        $jsonMovies = json_decode($content, true);
-        
-        //Get the results of the JSON
-        $jsonMovies = $jsonMovies["results"];
-        
-        //For each movie
-        for($i = 0; $i < count($jsonMovies); $i++)
+        for($j = 1; $j <= NUM_PAGES; $j++)
         {
-            //Get the id
-            $id = $jsonMovies[$i]["id"];
-            
-            //Ask for the detailed version of the film
-            $content = file_get_contents("https://api.themoviedb.org/3/movie/$id?api_key=e4969e3fb066dfee11facfc052865079");
-            $jsonMovie = json_decode($content, true);
+            //Get first page movies JSON
+            $content = file_get_contents(MOVIES_DB_URL . "&page=$j");
+            $jsonMovies = json_decode($content, true);
 
-            //Insert the detailed film to the database
-            InsertFilmToTable($jsonMovie, $sql);
+            //Get the results of the JSON
+            $jsonMovies = $jsonMovies["results"];
+
+            //For each movie
+            for($i = 0; $i < count($jsonMovies); $i++)
+            {
+                //Get the id
+                $id = $jsonMovies[$i]["id"];
+                
+                //Ask for the detailed version of the film
+                $content = file_get_contents("https://api.themoviedb.org/3/movie/$id?api_key=e4969e3fb066dfee11facfc052865079");
+                $jsonMovie = json_decode($content, true);
+
+                //Insert the detailed film to the database
+                InsertFilmToTable($jsonMovie, $sql);
+            }
         }
     }
 
@@ -94,25 +99,30 @@
 
     function InsertTvShows($sql)
     {
-        //Get first page movies JSON
-        $content = file_get_contents(SHOWS_DB_URL);
-        $jsonTvShows = json_decode($content, true);
-        
-        //Get the results of the JSON
-        $jsonTvShows = $jsonTvShows["results"];
-        
-        //For each movie
-        for($i = 0; $i < count($jsonTvShows); $i++)
+        for($j = 1; $j <= NUM_PAGES; $j++)
         {
-            //Get the id
-            $id = $jsonTvShows[$i]["id"];
-            //Ask for the detailed version of the film
-            $content = file_get_contents("https://api.themoviedb.org/3/tv/$id?api_key=e4969e3fb066dfee11facfc052865079");
-            $jsonTvShow = json_decode($content, true);
+            //Get first page movies JSON
+            $content = file_get_contents(SHOWS_DB_URL . "&page=$j");
+            $jsonTvShows = json_decode($content, true);
+            
+            //Get the results of the JSON
+            $jsonTvShows = $jsonTvShows["results"];
+            
+            //For each movie
+            for($i = 0; $i < count($jsonTvShows); $i++)
+            {
+                //Get the id
+                $id = $jsonTvShows[$i]["id"];
+                //Ask for the detailed version of the film
+                $content = file_get_contents("https://api.themoviedb.org/3/tv/$id?api_key=e4969e3fb066dfee11facfc052865079");
+                $jsonTvShow = json_decode($content, true);
 
-            //Insert the detailed show to the database
-            InsertTvShowToTable($jsonTvShow, $sql);
+                //Insert the detailed show to the database
+                InsertTvShowToTable($jsonTvShow, $sql);
+            }
         }
+
+        
     }
 
     function InsertTvShowToTable($tvShowInfo, $sql)

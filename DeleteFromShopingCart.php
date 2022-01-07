@@ -1,6 +1,6 @@
 <?php
 
-require_once "Webbuilders" . DIRECTORY_SEPARATOR . "WebBuilder.php";
+require_once "WebBuilders" . DIRECTORY_SEPARATOR . "WebBuilder.php";
 
 if (isset($_COOKIE["login"]))
 {

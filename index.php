@@ -22,7 +22,6 @@
 
         //Open Body
         $html .= "<body>";
-
         $html .= CreateBody($webBuilder);        
 
         $html .= "</body>";

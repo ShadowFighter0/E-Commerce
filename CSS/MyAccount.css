@@ -1,0 +1,129 @@
+*{
+    box-sizing: border-box;
+}
+
+body {
+    overflow-x: hidden;
+    background-color: rgb(24,26,27);
+    margin: 1%;
+    font-family: Arial, Helvetica, sans-serif;
+    color: whitesmoke;
+}
+
+h2{
+    margin-left: 5%
+}
+
+.line{
+    width: 90%;
+    margin: 0 5%;
+    border-bottom: 1px solid whitesmoke;
+}
+
+#Info{
+    width: 90%;
+    margin: 2% 5%;
+    border: 1px solid whitesmoke;
+}
+
+#Info h2{
+    text-align: center;
+    margin: 2% 45%;
+    width: 10%;
+    font-size: 2em;
+}
+
+#Info p{
+    text-align: center;
+    font-size: 1.35em;
+    margin: 2% 45%;
+    width: 10%;
+}
+
+#LastOrders{
+    margin: 2% 5%;
+    overflow: auto;
+    height: 35%;
+    border: 1px solid whitesmoke;
+}
+
+#LastOrders p{
+    text-align: center;
+}
+
+#LastOrders .OrderContainer{
+    float:left;
+    width: 20%;
+    height: 100%;
+    margin: 1% 2.5% 2%;
+    border-right: 1px solid whitesmoke;
+}
+
+#LastOrders .OrderContainer #TitleContainer{
+
+    float: left;
+    width: 100%;
+    height: 10%;
+    margin:5% 5% 5%;
+}
+
+#LastOrders .OrderContainer #TitleContainer #Title{
+    margin-right:15px;
+}
+
+#LastOrders .OrderContainer #Date{
+    width: 45%;
+}
+
+#LastOrders .OrderContainer #DetailsContainer{
+    float: left;
+    display: block;
+    height: 70%;
+}
+
+#LastOrders .OrderContainer #TotalPrice{
+    float: left;
+    display: block;
+    margin-top: 5%;
+    height: 10%;
+    width: 90%;
+}
+
+#Options
+{
+    border: 1px solid whitesmoke;
+    width: 90%;
+    height: 15%;
+    margin: 2% 5%;
+}
+
+#Options #Right
+{
+    float: left;
+    width: 50%;
+}
+
+#Options p
+{
+    text-align: center;
+}
+
+#Options button{
+    width: 80%;
+    height: 50%;
+    margin:0% 10%;
+}
+
+
+#Options #Left
+{
+    float: left;
+    width: 50%;
+    border-right: 1px solid whitesmoke;
+}
+
+
+#LastOrders .OrderContainer{
+
+    height: 30%;
+}

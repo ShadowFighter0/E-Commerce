@@ -17,10 +17,16 @@
         public function OpenSqli()
         {
             $this->mysqli = new mysqli(
-                HOST_SERVER,
-                USER_SERVER,
-                PASSWORD_SERVER,
-                DATABASE_SERVER);
+                HOST_LOCAL,
+                USER_LOCAL,
+                PASSWORD_LOCAL,
+                DATABASE_LOCAL);
+
+
+                //HOST_SERVER,
+                //USER_SERVER,
+                //PASSWORD_SERVER,
+                //DATABASE_SERVER);
 
             return $this->mysqli;
         }

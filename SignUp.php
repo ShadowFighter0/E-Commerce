@@ -47,8 +47,8 @@ function CreateBody()
         $html .= "</div>";
 
         $html .= "<button type=\"submit\">Submit</button>";
-
         $html .= "</form>";
+        $html .= "<br><a href= index.php><p>Go back</p></a>";        
 
     $html .= "</div>";
 

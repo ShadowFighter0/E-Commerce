@@ -162,6 +162,11 @@
                 $html .= "<span id=PriceDown>" . $data["Price"] . "$</span>";
                 $html .= "</div>";
             }
+
+            if (isset($_COOKIE["isAdmin"]) and $_COOKIE["isAdmin"] == 1)
+            {
+                $html .= "<a href=RemoveItem.php?type=". $_GET["show"] ."&id=" . $_GET["id"] . "> Remove Item </a>"; 
+            }
             
         $html .= "</div>";
 

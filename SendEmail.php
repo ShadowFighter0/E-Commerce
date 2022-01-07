@@ -4,10 +4,6 @@ use PHPMailer\PHPMailer\PHPMailer;
 
 require_once "WebBuilders" . DIRECTORY_SEPARATOR . "WebBuilder.php";
 
-    require_once "PHPMAILER" . DIRECTORY_SEPARATOR . "Exception.php";
-    require_once "PHPMAILER" . DIRECTORY_SEPARATOR . "SMTP.php";
-    require_once "PHPMAILER" . DIRECTORY_SEPARATOR . "PHPMAILER.php";
-
     echo CreateSendEmail();
 
     function CreateSendEmail()
@@ -27,17 +23,19 @@ require_once "WebBuilders" . DIRECTORY_SEPARATOR . "WebBuilder.php";
     
     function CreateBody()
     {
-
-        if (isset($_POST["Name"]) 
-        and isset($_POST["Email"]) 
-        and isset($_POST["Password"]) 
-        and isset($_POST["ConfirmPassword"]))
+        //If we are logged
+        if (isset($_POST["Name"]) and $_POST["Name"] != ""
+        and isset($_POST["Email"]) and $_POST["Email"] != "" 
+        and isset($_POST["Password"]) and $_POST["Password"] != ""
+        and isset($_POST["ConfirmPassword"]) and $_POST["ConfirmPassword"] != "" ) 
         {
+            //And Passwords match
             if($_POST["Password"] == $_POST["ConfirmPassword"])
             {
-                $email = $_POST["Email"];
-
+               
                 $webBuilder = new WebBuilder();
+
+                $email = $_POST["Email"];
                 
                 $sqliConnection = $webBuilder->sql->OpenSqli();
         
@@ -56,36 +54,26 @@ require_once "WebBuilders" . DIRECTORY_SEPARATOR . "WebBuilder.php";
                     $emailKey = GenerateRandomCode();
                     $name = mysqli_real_escape_string($sqliConnection, $_POST["Name"]);
                     $email = mysqli_real_escape_string($sqliConnection, $email);
+                    
+                    $sqliConnection = $webBuilder->sql->OpenSqli();
 
+                    $results = $sqliConnection->query("SELECT * FROM users");
+                    $userId = $results->num_rows;
+                    $passHashed = mysqli_real_escape_string($sqliConnection, $passHashed);
+                    $false = (int)false;
+                    
+                    $jquery = $sqliConnection->prepare("INSERT INTO users VALUES ($userId,'$name','$email','$passHashed',$false, '$emailKey', false)");
+                    $jquery->execute();
+        
+                    $webBuilder->sql->CloseConnection();
 
-                    $to      = $email;
-                    $subject = 'Confirmation Email';
-                    $message = "Please click <a href = localhost/activate.php?$emailKey> here <a> to activate your key. If that didnt work try copying and pasting this adresslocalhost/activate.php?$emailKey.";
-                    $headers = 'From: apidprieto21@gmail.com'       . "\r\n" .
-                    'Reply-To: apidprieto21@gmail.com' . "\r\n" .
-                    'X-Mailer: PHP/' . phpversion();
-
-                    if (mail($to, $subject, $message, $headers))
-                    {
-                        $sqliConnection = $webBuilder->sql->OpenSqli();
-
-                        $results = $sqliConnection->query("SELECT * FROM users");
-                        $userId = $results->num_rows;
-                        $passHashed = mysqli_real_escape_string($sqliConnection, $passHashed);
-                        $false = (int)false;
-                        
-                        $jquery = $sqliConnection->prepare("INSERT INTO users VALUES ($userId,'$name','$email','$passHashed',$false, '$emailKey')");
-                        $jquery->execute();
-            
-                        $webBuilder->sql->CloseConnection();
-                        
-                       
-                        echo "<p> User Created </p><br><br><p> Check your email to verify your email.</p>";
-                    }
+                    setcookie("login", "1", time() + 30 * 60);
+                    setcookie("userId", $userId, time() + 30 * 60);
+                    
+                    echo "<p> User Created</p> <br> <p> Click <a href = index.php> here </a> to go back to the main menu</p>";
                 }
                 else
                 {
-                    
                     $webBuilder->sql->CloseConnection();
                     echo "<p> This email has already been registered. Please Log In <a href = \"LogIn.php\">here</a> or use a different email.";
                 }

@@ -42,16 +42,9 @@
                 $result = $result->fetch_array(MYSQLI_ASSOC);
 
                 if($result["Amount"] > 1)
-                {
-                    $jquery = $sqliConnection->prepare("SELECT * FROM users WHERE email = ?");
-                    $jquery->bind_param("s", $_COOKIE["email"]);
-                    $jquery->execute();
-                    $userResult = $jquery->get_result();
-    
-                    $row = $userResult->fetch_array(MYSQLI_ASSOC);
-    
+                {    
                     $jquery = $sqliConnection->prepare("SELECT * FROM shopinglist WHERE User_Id = ? and Type = ? and Product_Id = ?");
-                    $jquery->bind_param("isi", $row["User_Id"], $_GET["type"] ,$_GET["id"]);
+                    $jquery->bind_param("isi", $_COOKIE["userId"], $_GET["type"] ,$_GET["id"]);
                     $jquery->execute();
                     $shopResult = $jquery->get_result();
                     
@@ -66,7 +59,7 @@
                     {
                         //Add one new
                         $sqliConnection->query("INSERT INTO shopinglist (User_Id, Product_Id, Type,	Amount)
-                        VALUES (". $row["User_Id"] ."," . $_GET["id"].",'" . $_GET["type"]. "'," . 1 . ")");
+                        VALUES (". $_COOKIE["userId"] ."," . $_GET["id"].",'" . $_GET["type"]. "'," . 1 . ")");
                     }
 
                     $newAmount = $result["Amount"] - 1;

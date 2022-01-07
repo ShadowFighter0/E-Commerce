@@ -41,20 +41,16 @@ require_once "WebBuilders" . DIRECTORY_SEPARATOR . "WebBuilder.php";
         {
             $sqliConnection = $webBuilder->sql->OpenSqli();
 
-            $jquery = $sqliConnection->prepare("SELECT * FROM users WHERE email = ?");
-            $jquery->bind_param("s", $_COOKIE["email"]);
-            $jquery->execute();
-            $userResult = $jquery->get_result();
-
-            $userResult = $userResult->fetch_array(MYSQLI_ASSOC);
-
             $jquery = $sqliConnection->prepare("SELECT * FROM shopinglist WHERE User_Id = ?");
-            $jquery->bind_param("s", $userResult["User_Id"]);
+            $jquery->bind_param("s", $_COOKIE["userId"]);
             $jquery->execute();
             $shopList = $jquery->get_result();
 
             if ($shopList->num_rows > 0)
             {
+                $totalPrice = 0;
+                $totalAmount = 0;
+
                 $html .= "<div id = folder>";
                 
                 for ($i = 0 ; $i < $shopList->num_rows; $i++)
@@ -66,8 +62,19 @@ require_once "WebBuilders" . DIRECTORY_SEPARATOR . "WebBuilder.php";
                     $productResult = $productResult->fetch_array(MYSQLI_ASSOC);
 
                     $html .= $webBuilder->CreateShopView($productResult, $shopListArray);
+                    $totalAmount +=$shopListArray["Amount"];
+                    $totalPrice += $productResult["Price"] * $shopListArray["Amount"];
                 }
                 $html .= "</div>";
+
+                $html.="<div class=line></div>";
+                //Make Order button
+                $html .= "";
+                $html .= "<p> Total Items: $totalAmount <br> Total Price: $totalPrice $ <br> </p>";
+                $html .= "<div class=line></div>";
+                $html .= "<form method='post' action ='MakeOrder.php'>";
+                $html .= "<button id=MakeOrder type=\"submit\">Make Order</button>";
+                $html .= "</form>";
             }
             else
             {
@@ -75,6 +82,10 @@ require_once "WebBuilders" . DIRECTORY_SEPARATOR . "WebBuilder.php";
             }
 
             $webBuilder->sql->CloseConnection();
+        }
+        else
+        {
+            $html.= "<p>You are not logged. Please click <a href=LogIn.php> here </a> to sign in</p>";
         }
 
         return $html;

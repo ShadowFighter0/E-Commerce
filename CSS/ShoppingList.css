@@ -86,19 +86,43 @@ body {
 }
 
 .shop-links #Right {
+    text-align: center;
     margin-top: 10%;
 
-    float: left;
+    border: 1px solid whitesmoke;
 
-    width: 50%;
-    height: 100%;
+    float: left;
+    
+    width: 20%;
+    height: 20%;
 }
 
 .shop-links #Left {
+    text-align: center;
     margin-top: 10%;
 
-    float: right;
+    border: 1px solid whitesmoke;
 
-    width: 50%;
-    height: 100%;
+    float: right;
+    width: 20%;
+    height: 20%;
+}
+
+.line{
+    width: 90%;
+    margin: 0% 5%;
+    border-bottom: 1px solid whitesmoke;
+}
+
+
+p{
+    text-align: center;
+    font-size: 1.5em;
+}
+
+#MakeOrder{
+    text-align: center;
+    margin: 1% 5%;
+    width: 90%;
+    height: 10%;
 }

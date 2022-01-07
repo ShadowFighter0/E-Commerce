@@ -1,6 +1,6 @@
 <?php
 
-    require_once "WebBuilders/WebBuilder.php";
+    require_once "WebBuilders" . DIRECTORY_SEPARATOR . "WebBuilder.php";
 
     echo CreateConfirmLogIn();
 
@@ -49,7 +49,12 @@
                 if ($webBuilder->DeHashPassword($password, $row["passwordHashed"]))
                 {
                     setcookie("login", "1", time() + 30 * 60);
-                    setcookie("email", $_POST["Email"], time() + 30 * 60);
+                    setcookie("userId", $row["User_Id"], time() + 30 * 60);
+
+                    if($row["isAdmin"])
+                    {
+                        setcookie("isAdmin", "1", time() + 30 * 60);
+                    }
 
                     //Redirect to index Signed in
                     header("Location: index.php");

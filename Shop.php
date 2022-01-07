@@ -90,7 +90,7 @@
                 $results->data_seek($i);
                 $row = $results->fetch_array(MYSQLI_ASSOC);
 
-                $html .= $webBuilder->CreateViewFilm($row);
+                $html .= $webBuilder->CreateViewTvShow($row);
             }
             $html .= "</div>";
         }

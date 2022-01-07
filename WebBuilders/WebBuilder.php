@@ -8,6 +8,7 @@
     define ("MOVIE_STYLE_PATH", "CSS" . DIRECTORY_SEPARATOR . "Movie.css");
     define ("VIEWFILM_STYLE_PATH", "CSS" . DIRECTORY_SEPARATOR . "View.css"); 
     define ("SHOPINGLIST_STYLE_PATH", "CSS" . DIRECTORY_SEPARATOR . "ShoppingList.css");
+    define ("ACCOUNT_STYLE_PATH", "CSS" . DIRECTORY_SEPARATOR . "MyAccount.css");
 
     define ("IMG_BASEPATH", "https://image.tmdb.org/t/p/w500/");
 
@@ -48,6 +49,14 @@ class WebBuilder{
         return $html;
     }
 
+    function WriteHeaderLinksForAccount()
+    {
+        $html = "<link rel=\"stylesheet\" href=" . ACCOUNT_STYLE_PATH . ">";        
+        $html.= "<link rel=\"stylesheet\" href=" . NAVBAR_STYLE_PATH . ">";
+
+        return $html;
+    }
+
     function CreateNavBar()
     {
         $this->AddTimeToSession();
@@ -56,12 +65,17 @@ class WebBuilder{
 
     function AddTimeToSession()
     {
-        if (isset($_COOKIE["login"]) and $_COOKIE["login"] == 1)
+        if (isset($_COOKIE["login"]) and $_COOKIE["login"] == 1 and isset($_COOKIE["email"]) and $_COOKIE["email"] != "")
         {
-            $email = $_COOKIE["email"];
+            $userID = $_COOKIE["userId"];
             
             setcookie("login", "1", time() + 30 * 60);
-            setcookie("email", $email, time() + 30 * 60);
+            setcookie("userId", $userID, time() + 30 * 60);
+
+            if(isset($_COOKIE["isAdmin"]))
+            {
+                setcookie("isAdmin", "1", time() + 30 * 60);       
+            }
         }
     }
 
@@ -93,13 +107,13 @@ class WebBuilder{
 
     function CreateShopView($productResult, $shopList)
     {
-        $html = "<div class= shopMovie><a href=View.php?show=film&id=" . $productResult["Product_Id"] .">";
+        $html = "<div class= shopMovie><a href=View.php?show=" . $shopList["Type"] . "&id=" . $productResult["Product_Id"] .">";
 
         $html .= "<img src = \"" . IMG_BASEPATH . $productResult["IMG_Background"] . "\">";
 
         $html .= "<div class = movie-info>";
             $html .= "<h3 id=Title>". $productResult["Title"] . "</h3>";
-            $html .= "<p id =Price> Price: " . $productResult["Price"] . "$</p>";
+            $html .= "<p id =Price> Price per item: " . $productResult["Price"] . "$</p>";
             $html .= "<p id =Amount> Amount: ". $shopList["Amount"] . "</h3>";
         $html .= "</a></div>";
         $html .= "<div class = shop-links>";
